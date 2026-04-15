@@ -7,26 +7,31 @@
   <style>
     :root {
       --bg: #f5f7fb;
+      --bg2: #eef4ff;
       --card: #ffffff;
       --text: #0f172a;
       --muted: #64748b;
       --primary: #2563eb;
       --primary-soft: #dbeafe;
       --success: #16a34a;
+      --success-soft: #dcfce7;
       --danger: #dc2626;
+      --danger-soft: #fee2e2;
       --warning: #d97706;
+      --warning-soft: #ffedd5;
       --border: #e5e7eb;
       --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
       --radius: 18px;
     }
 
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%);
+      background: linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
       color: var(--text);
-      padding-bottom: 90px;
+      padding-bottom: 110px;
     }
 
     header {
@@ -52,7 +57,7 @@
 
     main {
       padding: 16px;
-      max-width: 980px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -60,7 +65,8 @@
     .screen.active { display: block; }
 
     .grid { display: grid; gap: 14px; }
-    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
 
     .card {
       background: var(--card);
@@ -70,28 +76,56 @@
       box-shadow: var(--shadow);
     }
 
+    .card h2, .card h3 {
+      margin: 0 0 10px;
+    }
+
     .muted { color: var(--muted); }
-    .big { font-size: 1.5rem; font-weight: 700; }
     .small { font-size: 0.88rem; }
+    .big { font-size: 1.55rem; font-weight: 800; }
+
+    .kpi {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
 
     .pill {
       display: inline-block;
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 0.78rem;
-      font-weight: 600;
-      background: var(--primary-soft);
-      color: var(--primary);
+      font-weight: 700;
       margin: 2px 6px 2px 0;
     }
 
-    input, select, textarea, button { font: inherit; }
+    .pill-primary { background: var(--primary-soft); color: var(--primary); }
+    .pill-success { background: var(--success-soft); color: var(--success); }
+    .pill-danger { background: var(--danger-soft); color: var(--danger); }
+    .pill-warning { background: var(--warning-soft); color: var(--warning); }
+
+    form {
+      display: grid;
+      gap: 10px;
+    }
+
+    input, select, textarea, button {
+      font: inherit;
+    }
 
     input, select, textarea {
       width: 100%;
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 12px;
+      background: #fff;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
     }
 
     button {
@@ -103,19 +137,96 @@
     }
 
     .btn-primary { background: var(--primary); color: white; }
-    .btn-danger { background: #fee2e2; color: var(--danger); }
     .btn-light { background: #eff6ff; color: var(--primary); }
+    .btn-danger { background: var(--danger-soft); color: var(--danger); }
+    .btn-success { background: var(--success-soft); color: var(--success); }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 18px;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      background: #fafafa;
+    }
+
+    .income { color: var(--success); font-weight: 800; }
+    .expense { color: var(--danger); font-weight: 800; }
+
+    .priority-alta { color: var(--danger); font-weight: 800; }
+    .priority-media { color: var(--warning); font-weight: 800; }
+    .priority-baixa { color: var(--success); font-weight: 800; }
+
+    .done { text-decoration: line-through; opacity: 0.65; }
+
+    .progress {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .progress > div {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
 
     .nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: #fff;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(7, 1fr);
       padding: 8px;
+      z-index: 30;
+      gap: 6px;
+    }
+
+    .nav button {
+      background: transparent;
+      padding: 9px 4px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 700;
     }
 
     .nav button.active {
@@ -123,68 +234,727 @@
       background: #eff6ff;
       border-radius: 12px;
     }
+
+    .right-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 700px) {
+      .nav {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Secretária Pessoal</h1>
-    <p>Organize sua vida financeira e rotina</p>
+    <p id="greeting">Sua assistente de rotina, finanças, tarefas, estudos e lazer.</p>
   </header>
 
   <main>
     <section id="home" class="screen active">
-      <div class="card">
-        <h2>Bem-vindo</h2>
-        <p>Seu app está funcionando 🎉</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Resumo financeiro</h3>
+          <div class="big" id="saldoTotal">R$ 0,00</div>
+          <p class="small muted">Saldo atual</p>
+          <div class="row">
+            <span class="pill pill-success" id="receitasResumo">Receitas: R$ 0,00</span>
+            <span class="pill pill-danger" id="despesasResumo">Despesas: R$ 0,00</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Hoje</h3>
+          <p id="proximoCompromisso">Nenhum compromisso cadastrado.</p>
+          <p id="tarefasUrgentes" class="small muted">Tarefas urgentes: 0</p>
+          <p id="estudoHoje" class="small muted">Estudo planejado: nenhum</p>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:14px;">
+        <div class="card">
+          <h3>Meu painel</h3>
+          <div class="grid grid-2">
+            <div>
+              <p class="section-title">Orçamento do mês</p>
+              <div class="progress"><div id="budgetBar"></div></div>
+              <p class="small muted" id="budgetText">Defina seu orçamento para acompanhar.</p>
+            </div>
+            <div>
+              <p class="section-title">Equilíbrio da rotina</p>
+              <p class="small" id="rotinaTexto">Cadastre tarefas, estudos e lazer para receber um panorama da sua rotina.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="kpi">
+            <div class="small muted">Tarefas abertas</div>
+            <div class="big" id="kpiTasks">0</div>
+          </div>
+          <div class="kpi">
+            <div class="small muted">Horas de estudo</div>
+            <div class="big" id="kpiStudy">0h</div>
+          </div>
+          <div class="kpi">
+            <div class="small muted">Tempo de lazer</div>
+            <div class="big" id="kpiLeisure">0h</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Sugestões da sua secretária</h3>
+          <div id="insights" class="list"></div>
+        </div>
       </div>
     </section>
 
     <section id="financas" class="screen">
-      <div class="card">
-        <h2>Finanças</h2>
-        <p>Área de controle financeiro</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <h2>Lançar movimentação</h2>
+          <form id="financeForm">
+            <select id="finType" required>
+              <option value="receita">Receita</option>
+              <option value="despesa">Despesa</option>
+            </select>
+            <input id="finDesc" placeholder="Descrição" required />
+            <input id="finValue" type="number" step="0.01" placeholder="Valor" required />
+            <select id="finCategory" required>
+              <option>Moradia</option>
+              <option>Alimentação</option>
+              <option>Transporte</option>
+              <option>Trabalho</option>
+              <option>Lazer</option>
+              <option>Saúde</option>
+              <option>Estudos</option>
+              <option>Contas Fixas</option>
+              <option>Investimentos</option>
+              <option>Outros</option>
+            </select>
+            <input id="finDate" type="date" required />
+            <button class="btn-primary" type="submit">Salvar lançamento</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Configurar orçamento</h2>
+          <form id="budgetForm">
+            <input id="budgetInput" type="number" step="0.01" placeholder="Ex.: 3000" required />
+            <button class="btn-light" type="submit">Salvar orçamento mensal</button>
+          </form>
+          <p class="small muted">O app mostra quanto você já gastou no mês comparado ao limite definido.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="between">
+          <h2>Histórico financeiro</h2>
+          <div class="right-actions">
+            <button class="btn-light" onclick="seedDemo()">Carregar exemplo</button>
+            <button class="btn-danger" onclick="clearSection('transactions')">Limpar finanças</button>
+          </div>
+        </div>
+        <div id="transactionsList" class="list"></div>
       </div>
     </section>
 
     <section id="agenda" class="screen">
-      <div class="card">
-        <h2>Agenda</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h2>Novo compromisso</h2>
+          <form id="eventForm">
+            <input id="eventTitle" placeholder="Título" required />
+            <input id="eventDate" type="date" required />
+            <input id="eventTime" type="time" required />
+            <input id="eventPlace" placeholder="Local" />
+            <textarea id="eventNote" placeholder="Observações"></textarea>
+            <button class="btn-primary" type="submit">Salvar compromisso</button>
+          </form>
+        </div>
+        <div class="card">
+          <h2>Resumo da agenda</h2>
+          <p id="agendaResumo" class="muted">Cadastre seus compromissos para visualizar sua rotina.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="between">
+          <h2>Compromissos</h2>
+          <button class="btn-danger" onclick="clearSection('events')">Limpar agenda</button>
+        </div>
+        <div id="eventsList" class="list"></div>
       </div>
     </section>
 
     <section id="tarefas" class="screen">
-      <div class="card">
-        <h2>Tarefas</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h2>Nova tarefa</h2>
+          <form id="taskForm">
+            <input id="taskTitle" placeholder="Título da tarefa" required />
+            <select id="taskPriority" required>
+              <option value="alta">Alta</option>
+              <option value="media">Média</option>
+              <option value="baixa">Baixa</option>
+            </select>
+            <select id="taskCategory" required>
+              <option>Trabalho</option>
+              <option>Pessoal</option>
+              <option>Financeiro</option>
+              <option>Estudo</option>
+              <option>Saúde</option>
+              <option>Lazer</option>
+            </select>
+            <input id="taskDeadline" type="date" required />
+            <button class="btn-primary" type="submit">Salvar tarefa</button>
+          </form>
+        </div>
+        <div class="card">
+          <h2>Status</h2>
+          <p id="taskResumo" class="muted">Acompanhe o que é urgente e o que já foi concluído.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="between">
+          <h2>Minhas tarefas</h2>
+          <button class="btn-danger" onclick="clearSection('tasks')">Limpar tarefas</button>
+        </div>
+        <div id="tasksList" class="list"></div>
       </div>
     </section>
 
     <section id="estudos" class="screen">
-      <div class="card">
-        <h2>Estudos</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h2>Planejar estudo</h2>
+          <form id="studyForm">
+            <input id="studyTopic" placeholder="Tema ou matéria" required />
+            <input id="studyDate" type="date" required />
+            <input id="studyDuration" type="number" placeholder="Duração em minutos" required />
+            <button class="btn-primary" type="submit">Salvar estudo</button>
+          </form>
+        </div>
+        <div class="card">
+          <h2>Progresso</h2>
+          <p id="studyResumo" class="muted">Planeje sessões para acompanhar sua constância.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="between">
+          <h2>Cronograma de estudos</h2>
+          <button class="btn-danger" onclick="clearSection('studies')">Limpar estudos</button>
+        </div>
+        <div id="studiesList" class="list"></div>
       </div>
     </section>
 
     <section id="lazer" class="screen">
-      <div class="card">
-        <h2>Lazer</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h2>Programar lazer</h2>
+          <form id="leisureForm">
+            <input id="leisureTitle" placeholder="Atividade de lazer" required />
+            <input id="leisureDate" type="date" required />
+            <input id="leisureDuration" type="number" placeholder="Duração em minutos" required />
+            <button class="btn-primary" type="submit">Salvar lazer</button>
+          </form>
+        </div>
+        <div class="card">
+          <h2>Bem-estar</h2>
+          <p id="leisureResumo" class="muted">Use essa área para equilibrar sua rotina e descansar.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <div class="between">
+          <h2>Momentos de lazer</h2>
+          <button class="btn-danger" onclick="clearSection('leisures')">Limpar lazer</button>
+        </div>
+        <div id="leisuresList" class="list"></div>
+      </div>
+    </section>
+
+    <section id="relatorios" class="screen">
+      <div class="grid grid-2">
+        <div class="card">
+          <h2>Relatório financeiro</h2>
+          <p id="reportFinance"></p>
+        </div>
+        <div class="card">
+          <h2>Relatório de produtividade</h2>
+          <p id="reportProd"></p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px;">
+        <h2>Resumo executivo</h2>
+        <div id="reportExecutive"></div>
       </div>
     </section>
   </main>
 
   <nav class="nav">
-    <button onclick="show('home')">Início</button>
-    <button onclick="show('financas')">Finanças</button>
-    <button onclick="show('agenda')">Agenda</button>
-    <button onclick="show('tarefas')">Tarefas</button>
-    <button onclick="show('estudos')">Estudos</button>
-    <button onclick="show('lazer')">Lazer</button>
+    <button data-target="home" class="active">Início</button>
+    <button data-target="financas">Finanças</button>
+    <button data-target="agenda">Agenda</button>
+    <button data-target="tarefas">Tarefas</button>
+    <button data-target="estudos">Estudos</button>
+    <button data-target="lazer">Lazer</button>
+    <button data-target="relatorios">Relatórios</button>
   </nav>
 
   <script>
-    function show(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    const store = {
+      get(key, fallback) {
+        try {
+          const value = JSON.parse(localStorage.getItem(key));
+          return value ?? fallback;
+        } catch {
+          return fallback;
+        }
+      },
+      set(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
+    };
+
+    const state = {
+      transactions: store.get('transactions', []),
+      events: store.get('events', []),
+      tasks: store.get('tasks', []),
+      studies: store.get('studies', []),
+      leisures: store.get('leisures', []),
+      budget: store.get('budget', 0)
+    };
+
+    const money = v => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const today = new Date().toISOString().slice(0,10);
+    const monthKey = today.slice(0,7);
+
+    const finDate = document.getElementById('finDate');
+    const eventDate = document.getElementById('eventDate');
+    const taskDeadline = document.getElementById('taskDeadline');
+    const studyDate = document.getElementById('studyDate');
+    const leisureDate = document.getElementById('leisureDate');
+    const budgetInput = document.getElementById('budgetInput');
+
+    finDate.value = today;
+    eventDate.value = today;
+    taskDeadline.value = today;
+    studyDate.value = today;
+    leisureDate.value = today;
+    budgetInput.value = state.budget || '';
+
+    function uid() {
+      return Math.random().toString(36).slice(2, 10);
     }
+
+    function saveAll() {
+      Object.keys(state).forEach(key => store.set(key, state[key]));
+      renderAll();
+    }
+
+    function removeItem(section, id) {
+      state[section] = state[section].filter(item => item.id !== id);
+      saveAll();
+    }
+
+    function clearSection(section) {
+      if (!confirm('Tem certeza que deseja apagar estes dados?')) return;
+      if (section === 'budget') {
+        state.budget = 0;
+      } else {
+        state[section] = [];
+      }
+      saveAll();
+    }
+
+    function toggleTask(id) {
+      const task = state.tasks.find(t => t.id === id);
+      if (task) task.done = !task.done;
+      saveAll();
+    }
+
+    function upcomingEvent() {
+      return [...state.events]
+        .sort((a,b) => `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`))
+        .find(e => `${e.date} ${e.time}` >= `${today} 00:00`);
+    }
+
+    function monthTransactions() {
+      return state.transactions.filter(t => (t.date || '').startsWith(monthKey));
+    }
+
+    function totals() {
+      const income = state.transactions.filter(t => t.type === 'receita').reduce((sum, t) => sum + Number(t.value), 0);
+      const expense = state.transactions.filter(t => t.type === 'despesa').reduce((sum, t) => sum + Number(t.value), 0);
+      return { income, expense, balance: income - expense };
+    }
+
+    function hoursFromMinutes(totalMinutes) {
+      return `${(Number(totalMinutes || 0) / 60).toFixed(1).replace('.', ',')}h`;
+    }
+
+    function renderHome() {
+      const { income, expense, balance } = totals();
+      const next = upcomingEvent();
+      const urgentTasks = state.tasks.filter(t => !t.done && t.priority === 'alta').length;
+      const openTasks = state.tasks.filter(t => !t.done).length;
+      const studyToday = state.studies.find(s => s.date === today);
+      const totalStudyMinutes = state.studies.reduce((s, item) => s + Number(item.duration), 0);
+      const totalLeisureMinutes = state.leisures.reduce((s, item) => s + Number(item.duration), 0);
+      const budgetSpent = monthTransactions().filter(t => t.type === 'despesa').reduce((s,t) => s + Number(t.value), 0);
+      const budgetPct = state.budget > 0 ? Math.min((budgetSpent / state.budget) * 100, 100) : 0;
+
+      document.getElementById('saldoTotal').textContent = money(balance);
+      document.getElementById('receitasResumo').textContent = `Receitas: ${money(income)}`;
+      document.getElementById('despesasResumo').textContent = `Despesas: ${money(expense)}`;
+      document.getElementById('proximoCompromisso').textContent = next
+        ? `Próximo compromisso: ${next.title} em ${formatDate(next.date)} às ${next.time}`
+        : 'Nenhum compromisso cadastrado.';
+      document.getElementById('tarefasUrgentes').textContent = `Tarefas urgentes: ${urgentTasks}`;
+      document.getElementById('estudoHoje').textContent = studyToday
+        ? `Estudo planejado: ${studyToday.topic} (${studyToday.duration} min)`
+        : 'Estudo planejado: nenhum';
+      document.getElementById('budgetBar').style.width = `${budgetPct}%`;
+      document.getElementById('budgetText').textContent = state.budget > 0
+        ? `Você gastou ${money(budgetSpent)} de ${money(state.budget)} neste mês.`
+        : 'Defina seu orçamento para acompanhar.';
+      document.getElementById('rotinaTexto').textContent = `Você tem ${openTasks} tarefa(s) aberta(s), ${state.studies.length} sessão(ões) de estudo e ${state.leisures.length} atividade(s) de lazer cadastrada(s).`;
+      document.getElementById('kpiTasks').textContent = openTasks;
+      document.getElementById('kpiStudy').textContent = hoursFromMinutes(totalStudyMinutes);
+      document.getElementById('kpiLeisure').textContent = hoursFromMinutes(totalLeisureMinutes);
+
+      const insights = [];
+      if (state.budget > 0 && budgetSpent > state.budget) insights.push('Seu orçamento mensal já foi ultrapassado. Revise as despesas com mais peso.');
+      else if (state.budget > 0 && budgetPct >= 80) insights.push('Você está perto do limite do orçamento mensal.');
+      if (urgentTasks > 0) insights.push(`Você tem ${urgentTasks} tarefa(s) urgente(s) para priorizar hoje.`);
+      if (!studyToday && state.studies.length === 0) insights.push('Nenhum estudo foi programado ainda. Separe um bloco curto para manter constância.');
+      if (state.leisures.length === 0 && state.tasks.length > 3) insights.push('Sua rotina parece pesada. Agende um momento de lazer ou pausa.');
+      if (!next) insights.push('Sua agenda está livre. Aproveite para planejar compromissos importantes.');
+      if (insights.length === 0) insights.push('Tudo sob controle. Sua rotina está bem organizada hoje.');
+      document.getElementById('insights').innerHTML = insights.map(t => `<div class="item">${t}</div>`).join('');
+    }
+
+    function renderTransactions() {
+      const list = document.getElementById('transactionsList');
+      if (!state.transactions.length) {
+        list.innerHTML = '<div class="empty">Nenhuma movimentação cadastrada.</div>';
+        return;
+      }
+
+      list.innerHTML = [...state.transactions]
+        .sort((a,b) => b.date.localeCompare(a.date))
+        .map(t => `
+          <div class="item">
+            <div class="between">
+              <div>
+                <strong>${escapeHtml(t.desc)}</strong><br>
+                <span class="small muted">${escapeHtml(t.category)} • ${formatDate(t.date)}</span>
+              </div>
+              <div class="right-actions">
+                <div class="${t.type === 'receita' ? 'income' : 'expense'}">${t.type === 'receita' ? '+' : '-'} ${money(t.value)}</div>
+                <button class="btn-danger small" onclick="removeItem('transactions', '${t.id}')">Excluir</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+    }
+
+    function renderEvents() {
+      const list = document.getElementById('eventsList');
+      if (!state.events.length) {
+        list.innerHTML = '<div class="empty">Nenhum compromisso cadastrado.</div>';
+        document.getElementById('agendaResumo').textContent = 'Cadastre seus compromissos para visualizar sua rotina.';
+        return;
+      }
+
+      const next = upcomingEvent();
+      document.getElementById('agendaResumo').textContent = next
+        ? `Próximo compromisso: ${next.title} em ${formatDate(next.date)} às ${next.time}.`
+        : 'Você não possui próximos compromissos futuros.';
+
+      list.innerHTML = [...state.events]
+        .sort((a,b) => `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`))
+        .map(e => `
+          <div class="item">
+            <div class="between">
+              <div>
+                <strong>${escapeHtml(e.title)}</strong><br>
+                <span class="small muted">${formatDate(e.date)} às ${e.time}${e.place ? ' • ' + escapeHtml(e.place) : ''}</span>
+                ${e.note ? `<div class="small">${escapeHtml(e.note)}</div>` : ''}
+              </div>
+              <button class="btn-danger" onclick="removeItem('events', '${e.id}')">Excluir</button>
+            </div>
+          </div>
+        `).join('');
+    }
+
+    function renderTasks() {
+      const list = document.getElementById('tasksList');
+      const open = state.tasks.filter(t => !t.done).length;
+      const done = state.tasks.filter(t => t.done).length;
+      document.getElementById('taskResumo').textContent = `Você tem ${open} tarefa(s) aberta(s) e ${done} concluída(s).`;
+
+      if (!state.tasks.length) {
+        list.innerHTML = '<div class="empty">Nenhuma tarefa cadastrada.</div>';
+        return;
+      }
+
+      list.innerHTML = [...state.tasks]
+        .sort((a,b) => Number(a.done) - Number(b.done) || a.deadline.localeCompare(b.deadline))
+        .map(t => `
+          <div class="item">
+            <div class="between">
+              <div>
+                <strong class="${t.done ? 'done' : ''}">${escapeHtml(t.title)}</strong><br>
+                <span class="small muted">${escapeHtml(t.category)} • até ${formatDate(t.deadline)}</span><br>
+                <span class="small priority-${t.priority}">Prioridade ${t.priority}</span>
+              </div>
+              <div class="right-actions">
+                <button class="btn-${t.done ? 'light' : 'success'}" onclick="toggleTask('${t.id}')">${t.done ? 'Reabrir' : 'Concluir'}</button>
+                <button class="btn-danger" onclick="removeItem('tasks', '${t.id}')">Excluir</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+    }
+
+    function renderStudies() {
+      const list = document.getElementById('studiesList');
+      const totalMinutes = state.studies.reduce((s, item) => s + Number(item.duration), 0);
+      document.getElementById('studyResumo').textContent = `Você programou ${state.studies.length} sessão(ões), totalizando ${totalMinutes} minuto(s).`;
+
+      if (!state.studies.length) {
+        list.innerHTML = '<div class="empty">Nenhuma sessão de estudo cadastrada.</div>';
+        return;
+      }
+
+      list.innerHTML = [...state.studies]
+        .sort((a,b) => a.date.localeCompare(b.date))
+        .map(s => `
+          <div class="item">
+            <div class="between">
+              <div>
+                <strong>${escapeHtml(s.topic)}</strong><br>
+                <span class="small muted">${formatDate(s.date)} • ${s.duration} min</span>
+              </div>
+              <button class="btn-danger" onclick="removeItem('studies', '${s.id}')">Excluir</button>
+            </div>
+          </div>
+        `).join('');
+    }
+
+    function renderLeisures() {
+      const list = document.getElementById('leisuresList');
+      const totalMinutes = state.leisures.reduce((s, item) => s + Number(item.duration), 0);
+      document.getElementById('leisureResumo').textContent = `Você programou ${state.leisures.length} atividade(s) de lazer, totalizando ${totalMinutes} minuto(s).`;
+
+      if (!state.leisures.length) {
+        list.innerHTML = '<div class="empty">Nenhum momento de lazer cadastrado.</div>';
+        return;
+      }
+
+      list.innerHTML = [...state.leisures]
+        .sort((a,b) => a.date.localeCompare(b.date))
+        .map(l => `
+          <div class="item">
+            <div class="between">
+              <div>
+                <strong>${escapeHtml(l.title)}</strong><br>
+                <span class="small muted">${formatDate(l.date)} • ${l.duration} min</span>
+              </div>
+              <button class="btn-danger" onclick="removeItem('leisures', '${l.id}')">Excluir</button>
+            </div>
+          </div>
+        `).join('');
+    }
+
+    function renderReports() {
+      const monthItems = monthTransactions();
+      const monthIncome = monthItems.filter(t => t.type === 'receita').reduce((s,t) => s + Number(t.value), 0);
+      const monthExpense = monthItems.filter(t => t.type === 'despesa').reduce((s,t) => s + Number(t.value), 0);
+
+      const categoryTotals = {};
+      monthItems.filter(t => t.type === 'despesa').forEach(t => {
+        categoryTotals[t.category] = (categoryTotals[t.category] || 0) + Number(t.value);
+      });
+      const entries = Object.entries(categoryTotals).sort((a,b) => b[1] - a[1]);
+      const topCategory = entries[0] ? `${entries[0][0]} (${money(entries[0][1])})` : 'Nenhuma';
+
+      document.getElementById('reportFinance').innerHTML = `
+        Receitas no mês: <strong>${money(monthIncome)}</strong><br>
+        Despesas no mês: <strong>${money(monthExpense)}</strong><br>
+        Saldo do mês: <strong>${money(monthIncome - monthExpense)}</strong><br>
+        Categoria com maior gasto: <strong>${topCategory}</strong>
+      `;
+
+      document.getElementById('reportProd').innerHTML = `
+        Tarefas totais: <strong>${state.tasks.length}</strong><br>
+        Tarefas concluídas: <strong>${state.tasks.filter(t => t.done).length}</strong><br>
+        Sessões de estudo: <strong>${state.studies.length}</strong><br>
+        Atividades de lazer: <strong>${state.leisures.length}</strong><br>
+        Compromissos cadastrados: <strong>${state.events.length}</strong>
+      `;
+
+      const exec = [];
+      exec.push(`Saldo geral atual: <strong>${money(totals().balance)}</strong>.`);
+      if (state.budget > 0) exec.push(`Orçamento mensal definido em <strong>${money(state.budget)}</strong>.`);
+      if (monthExpense > monthIncome) exec.push('As despesas do mês estão maiores que as receitas do mês.');
+      if (state.tasks.filter(t => !t.done).length > 5) exec.push('Há um volume alto de tarefas abertas.');
+      if (state.leisures.length === 0) exec.push('Ainda não há tempo de lazer programado.');
+      if (state.studies.length === 0) exec.push('Nenhuma rotina de estudo foi registrada.');
+      if (exec.length === 0) exec.push('Sua organização atual está equilibrada.');
+      document.getElementById('reportExecutive').innerHTML = exec.map(x => `<p>${x}</p>`).join('');
+    }
+
+    function renderAll() {
+      renderHome();
+      renderTransactions();
+      renderEvents();
+      renderTasks();
+      renderStudies();
+      renderLeisures();
+      renderReports();
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      const [y, m, d] = dateStr.split('-');
+      return `${d}/${m}/${y}`;
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function seedDemo() {
+      if (!confirm('Deseja carregar dados de exemplo?')) return;
+      state.transactions = [
+        { id: uid(), type: 'receita', desc: 'Salário', value: 3500, category: 'Trabalho', date: today },
+        { id: uid(), type: 'despesa', desc: 'Supermercado', value: 320, category: 'Alimentação', date: today },
+        { id: uid(), type: 'despesa', desc: 'Internet', value: 120, category: 'Contas Fixas', date: today }
+      ];
+      state.events = [
+        { id: uid(), title: 'Reunião com cliente', date: today, time: '10:00', place: 'Online', note: 'Apresentar proposta' }
+      ];
+      state.tasks = [
+        { id: uid(), title: 'Fechar relatório', priority: 'alta', category: 'Trabalho', deadline: today, done: false },
+        { id: uid(), title: 'Organizar agenda', priority: 'media', category: 'Pessoal', deadline: today, done: false }
+      ];
+      state.studies = [
+        { id: uid(), topic: 'Gestão financeira', date: today, duration: 60 }
+      ];
+      state.leisures = [
+        { id: uid(), title: 'Caminhada', date: today, duration: 40 }
+      ];
+      state.budget = 3000;
+      saveAll();
+    }
+
+    document.getElementById('financeForm').addEventListener('submit', e => {
+      e.preventDefault();
+      state.transactions.push({
+        id: uid(),
+        type: document.getElementById('finType').value,
+        desc: document.getElementById('finDesc').value,
+        value: Number(document.getElementById('finValue').value),
+        category: document.getElementById('finCategory').value,
+        date: document.getElementById('finDate').value
+      });
+      e.target.reset();
+      finDate.value = today;
+      saveAll();
+    });
+
+    document.getElementById('budgetForm').addEventListener('submit', e => {
+      e.preventDefault();
+      state.budget = Number(budgetInput.value || 0);
+      saveAll();
+    });
+
+    document.getElementById('eventForm').addEventListener('submit', e => {
+      e.preventDefault();
+      state.events.push({
+        id: uid(),
+        title: document.getElementById('eventTitle').value,
+        date: eventDate.value,
+        time: document.getElementById('eventTime').value,
+        place: document.getElementById('eventPlace').value,
+        note: document.getElementById('eventNote').value
+      });
+      e.target.reset();
+      eventDate.value = today;
+      saveAll();
+    });
+
+    document.getElementById('taskForm').addEventListener('submit', e => {
+      e.preventDefault();
+      state.tasks.push({
+        id: uid(),
+        title: document.getElementById('taskTitle').value,
+        priority: document.getElementById('taskPriority').value,
+        category: document.getElementById('taskCategory').value,
+        deadline: taskDeadline.value,
+        done: false
+      });
+      e.target.reset();
+      taskDeadline.value = today;
+      saveAll();
+    });
+
+    document.getElementById('studyForm').addEventListener('submit', e => {
+      e.preventDefault();
+      state.studies.push({
+        id: uid(),
+        topic: document.getElementById('studyTopic').value,
+        date: studyDate.value,
+        duration: Number(document.getElementById('studyDuration').value)
+      });
+      e.target.reset();
+      studyDate.value = today;
+      saveAll();
+    });
+
+    document.getElementById('leisureForm').addEventListener('submit', e => {
+      e.preventDefault();
+      state.leisures.push({
+        id: uid(),
+        title: document.getElementById('leisureTitle').value,
+        date: leisureDate.value,
+        duration: Number(document.getElementById('leisureDuration').value)
+      });
+      e.target.reset();
+      leisureDate.value = today;
+      saveAll();
+    });
+
+    document.querySelectorAll('.nav button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.dataset.target;
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+      });
+    });
+
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
+    document.getElementById('greeting').textContent = `${greeting}. Sua secretária pessoal está pronta para organizar seu dia.`;
+
+    renderAll();
   </script>
 </body>
 </html>
